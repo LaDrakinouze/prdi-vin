@@ -104,7 +104,7 @@ ul[role="listbox"] {
 /* options */
 ul[role="listbox"] li {
     color: black !important;
-    background: white !important;
+    background: black !important;
 }
 
 /* hover */
