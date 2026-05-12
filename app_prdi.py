@@ -93,7 +93,7 @@ div[data-baseweb="select"] > div {
 
 /* texte affiché dans la case */
 div[data-baseweb="select"] span {
-    color: white !important;
+    color: black !important;
 }
 
 /* menu déroulant */
