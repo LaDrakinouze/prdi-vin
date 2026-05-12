@@ -13,105 +13,193 @@ st.set_page_config(
 )
 
 # =========================================================
-# STYLE CSS
+# CSS PREMIUM
 # =========================================================
 
 st.markdown("""
 <style>
 
-/* ===== GLOBAL ===== */
+/* =====================================================
+GLOBAL
+===================================================== */
 
 html, body, [class*="css"] {
-    color: #f4efe9 !important;
     font-family: 'Segoe UI', sans-serif;
+    color: #f4efe9 !important;
 }
+
+/* =====================================================
+BACKGROUND
+===================================================== */
 
 .stApp {
-    background: linear-gradient(135deg, #140f1d, #2a1025);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(20,15,29,0.96),
+            rgba(89,29,46,0.92)
+        );
 }
 
-/* ===== TITRES ===== */
+/* =====================================================
+TEXT
+===================================================== */
+
+p, label, div, span {
+    color: #f4efe9 !important;
+}
+
+/* =====================================================
+TITLES
+===================================================== */
 
 h1 {
-    color: #ffffff !important;
-    font-size: 3rem !important;
+    color: white !important;
+    font-size: 3.3rem !important;
     font-weight: 800 !important;
 }
 
 h2, h3 {
-    color: #f4efe9 !important;
+    color: white !important;
+    font-weight: 700 !important;
 }
 
-/* ===== SIDEBAR ===== */
+/* =====================================================
+SIDEBAR
+===================================================== */
 
 section[data-testid="stSidebar"] {
-    background: #1c1528;
-    border-right: 2px solid #591d2e;
+
+    background:
+        linear-gradient(
+            180deg,
+            #1c1528,
+            #241328
+        );
+
+    border-right: 2px solid rgba(255,255,255,0.05);
 }
 
-/* ===== SELECTBOX FIX ===== */
+/* =====================================================
+SELECTBOX
+===================================================== */
 
 div[data-baseweb="select"] > div {
     background-color: #2b2036 !important;
     color: white !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
 }
 
 div[data-baseweb="select"] * {
     color: white !important;
 }
 
-/* ===== INPUTS ===== */
+/* =====================================================
+SLIDER
+===================================================== */
 
-.stSlider > div > div {
+.stSlider * {
     color: white !important;
 }
+
+/* =====================================================
+RADIO
+===================================================== */
 
 .stRadio label {
     color: white !important;
 }
 
-/* ===== METRICS ===== */
+/* =====================================================
+METRICS
+===================================================== */
 
 [data-testid="metric-container"] {
-    background: rgba(255,255,255,0.05);
+
+    background: rgba(255,255,255,0.06);
+
     border: 1px solid rgba(255,255,255,0.08);
-    padding: 20px;
-    border-radius: 18px;
-    backdrop-filter: blur(6px);
+
+    padding: 25px;
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 4px 30px rgba(0,0,0,0.2);
 }
 
-/* ===== TABLE ===== */
+[data-testid="metric-container"] * {
+    color: white !important;
+}
+
+/* =====================================================
+DATAFRAME
+===================================================== */
 
 [data-testid="stDataFrame"] {
-    background: rgba(255,255,255,0.03);
-    border-radius: 15px;
+
+    background: rgba(255,255,255,0.04);
+
+    border-radius: 18px;
+
     padding: 10px;
 }
 
-/* ===== EXPANDER ===== */
-
-.streamlit-expanderHeader {
-    background: rgba(255,255,255,0.03);
-    border-radius: 12px;
+[data-testid="stDataFrame"] * {
+    color: white !important;
 }
 
-/* ===== MOBILE FIX ===== */
+/* =====================================================
+EXPANDER
+===================================================== */
+
+.streamlit-expanderHeader {
+
+    background: rgba(255,255,255,0.04);
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* =====================================================
+PROGRESS BAR
+===================================================== */
+
+.stProgress > div > div > div > div {
+    background-color: #ff4b6e !important;
+}
+
+/* =====================================================
+PLOTLY
+===================================================== */
+
+.js-plotly-plot {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* =====================================================
+MOBILE
+===================================================== */
 
 @media (max-width: 768px) {
 
-    html, body, [class*="css"] {
-        color: white !important;
-        background-color: #140f1d !important;
+    h1 {
+        font-size: 2.4rem !important;
     }
 
     .stApp {
-        background: #140f1d !important;
+        background:
+            linear-gradient(
+                180deg,
+                #140f1d,
+                #2a1025
+            );
     }
-
-    h1 {
-        font-size: 2.3rem !important;
-    }
-
 }
 
 </style>
@@ -122,7 +210,10 @@ div[data-baseweb="select"] * {
 # =========================================================
 
 st.title("🍷 Simulateur technico-économique viticole")
-st.markdown("## Projet PRDI — coût de production et prix consommateur estimé")
+
+st.markdown("""
+## Projet PRDI — coût de production et prix consommateur estimé
+""")
 
 # =========================================================
 # SIDEBAR
@@ -144,59 +235,55 @@ coef_consommateur = st.sidebar.slider(
     3.0
 )
 
-st.sidebar.caption(
-    "Le coefficient permet d’estimer un prix consommateur "
-    "à partir du coût de production."
-)
+st.sidebar.caption("""
+Le coefficient permet d’estimer un prix consommateur
+à partir du coût de production.
+""")
 
 st.sidebar.markdown("---")
 
 st.sidebar.header("🌱 Choix techniques indépendants")
 
-# =========================================================
-# PARAMÈTRES
-# =========================================================
-
-param_options = ["Conventionnel", "Éco-responsable"]
+options = ["Conventionnel", "Éco-responsable"]
 
 rendement_mode = st.sidebar.selectbox(
     "Rendement",
-    param_options
+    options
 )
 
 main_oeuvre_mode = st.sidebar.selectbox(
     "Main-d'œuvre",
-    param_options
+    options
 )
 
 vendange_mode = st.sidebar.selectbox(
     "Vendange : énergie, eau, matériel",
-    param_options
+    options
 )
 
 intrants_mode = st.sidebar.selectbox(
     "Intrants phytosanitaires",
-    param_options
+    options
 )
 
 emballage_mode = st.sidebar.selectbox(
     "Emballages",
-    param_options
+    options
 )
 
 fermentation_mode = st.sidebar.selectbox(
     "Fermentation",
-    param_options
+    options
 )
 
 stabilisation_mode = st.sidebar.selectbox(
     "Stabilisation",
-    param_options
+    options
 )
 
 elevage_mode = st.sidebar.selectbox(
     "Élevage",
-    param_options
+    options
 )
 
 dechets_mode = st.sidebar.selectbox(
@@ -209,51 +296,72 @@ dechets_mode = st.sidebar.selectbox(
 # =========================================================
 
 params = {
+
     "Conventionnel": {
+
         "rendement": 60,
+
         "cout_horaire": 18,
         "temps_ha": 120,
+
         "energie_vendange": 250,
         "eau": 50,
         "cout_eau": 2,
         "materiel": 300,
+
         "fongicides": 25 * 10,
         "insecticides": 30,
         "herbicides": 80,
         "desherbage": 30,
+
         "bouteille": 0.8,
+
         "energie_fermentation": 8,
         "levures": 2.5,
+
         "sulfites": 0.8,
         "filtration": 4,
+
         "elevage": 15,
         "pertes": 0.05,
+
         "marc": 1430,
+
         "elimination": 43,
         "compost": -40,
         "valorisation": -72,
     },
 
     "Éco-responsable": {
+
         "rendement": 45,
+
         "cout_horaire": 18,
         "temps_ha": 160,
+
         "energie_vendange": 200,
         "eau": 40,
         "cout_eau": 2,
         "materiel": 450,
+
         "fongicides": 20 * 14,
         "insecticides": 200,
         "herbicides": 0,
         "desherbage": 200,
+
         "bouteille": 1.5,
+
         "energie_fermentation": 1,
         "levures": 0.2,
+
         "sulfites": 0.4,
         "filtration": 1,
+
         "elevage": 250,
         "pertes": 0.10,
+
         "marc": 1040,
+
         "elimination": 31,
         "compost": -40,
         "valorisation": -52,
@@ -263,7 +371,7 @@ params = {
 prix_energie = 0.252
 
 # =========================================================
-# RÉCUP PARAMÈTRES
+# PARAMÈTRES SÉLECTIONNÉS
 # =========================================================
 
 rendement_p = params[rendement_mode]
@@ -337,19 +445,29 @@ couts = {
     "Élevage":
         elevage_p["elevage"]
         * volume_hl,
-
 }
 
-# Déchets
+# =========================================================
+# DÉCHETS
+# =========================================================
 
 if dechets_mode == "Élimination":
-    couts["Gestion déchets"] = elevage_p["elimination"] * surface
+
+    couts["Gestion déchets"] = (
+        elevage_p["elimination"] * surface
+    )
 
 elif dechets_mode == "Compost":
-    couts["Gestion déchets"] = elevage_p["compost"] * surface
+
+    couts["Gestion déchets"] = (
+        elevage_p["compost"] * surface
+    )
 
 else:
-    couts["Gestion déchets"] = elevage_p["valorisation"] * surface
+
+    couts["Gestion déchets"] = (
+        elevage_p["valorisation"] * surface
+    )
 
 # =========================================================
 # TOTALS
@@ -429,24 +547,22 @@ c5.metric(
     f"{prix_conso:.2f} €"
 )
 
-st.caption(
-    "Le prix consommateur estimé est obtenu en appliquant "
-    "un coefficient commercial au coût de production."
-)
-
 # =========================================================
 # SCORE
 # =========================================================
 
 st.header("🌍 Score environnemental simplifié")
 
-st.metric("Score", f"{score}/100")
+st.metric(
+    "Score",
+    f"{score}/100"
+)
 
 st.progress(score / 100)
 
-st.caption(
-    "Ce score est un indicateur pédagogique simplifié."
-)
+st.caption("""
+Ce score est un indicateur pédagogique simplifié.
+""")
 
 # =========================================================
 # EXPLICATIONS
@@ -455,31 +571,31 @@ st.caption(
 with st.expander("ℹ️ Comprendre les paramètres indépendants"):
 
     st.write("""
-    Chaque étape du procédé peut être choisie indépendamment.
+Chaque étape du procédé peut être choisie indépendamment.
 
-    Exemple :
-    - utiliser une fermentation éco-responsable,
-    - mais conserver un élevage conventionnel.
+Exemple :
+- fermentation éco-responsable,
+- mais élevage conventionnel.
 
-    Cela permet de simuler des stratégies hybrides réalistes.
-    """)
+Cela permet de simuler des scénarios hybrides réalistes.
+""")
 
 with st.expander("ℹ️ Comprendre le score environnemental"):
 
     st.write("""
-    Le score environnemental prend en compte :
-    - l’utilisation d’intrants,
-    - l’énergie,
-    - le packaging,
-    - la gestion des déchets,
-    - les pertes liées à l’élevage.
+Le score environnemental prend en compte :
+- l’énergie,
+- les intrants,
+- l’élevage,
+- les déchets,
+- le packaging.
 
-    Plus le score est élevé,
-    plus le procédé est considéré comme responsable.
-    """)
+Plus le score est élevé,
+plus le procédé est considéré comme responsable.
+""")
 
 # =========================================================
-# GRAPHIQUES
+# GRAPHES
 # =========================================================
 
 st.header("📈 Répartition des coûts")
@@ -502,7 +618,10 @@ with col1:
         font_color='white'
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
 
 with col2:
 
@@ -517,7 +636,10 @@ with col2:
         font_color='white'
     )
 
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(
+        fig2,
+        use_container_width=True
+    )
 
 # =========================================================
 # TABLEAU
@@ -531,7 +653,7 @@ st.dataframe(
 )
 
 # =========================================================
-# ANALYSE AUTO
+# ANALYSE
 # =========================================================
 
 poste_max = df.sort_values(
@@ -549,13 +671,19 @@ st.success(
 st.markdown(f"""
 ### Interprétation
 
-- Le coût actuel de production est de **{cout_bouteille:.2f} €/bouteille**
-- Le prix consommateur simulé est de **{prix_conso:.2f} €**
-- Le score environnemental atteint **{score}/100**
-- Le principal poste de coût est :
+- Coût de production :
+**{cout_bouteille:.2f} €/bouteille**
+
+- Prix consommateur estimé :
+**{prix_conso:.2f} €**
+
+- Score environnemental :
+**{score}/100**
+
+- Poste dominant :
 **{poste_max['Poste']}**
 
-Cette simulation illustre les compromis
-entre performance économique
-et réduction des impacts environnementaux.
+Cette simulation met en évidence
+les compromis entre performance économique
+et impact environnemental.
 """)
