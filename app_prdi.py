@@ -91,8 +91,26 @@ div[data-baseweb="select"] > div {
     border: 1px solid rgba(255,255,255,0.2) !important;
 }
 
-div[data-baseweb="select"] * {
+/* texte affiché dans la case */
+div[data-baseweb="select"] span {
     color: white !important;
+}
+
+/* menu déroulant */
+ul[role="listbox"] {
+    background: white !important;
+}
+
+/* options */
+ul[role="listbox"] li {
+    color: black !important;
+    background: white !important;
+}
+
+/* hover */
+ul[role="listbox"] li:hover {
+    background: #f1f1f1 !important;
+    color: black !important;
 }
 
 /* =====================================================
