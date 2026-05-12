@@ -36,8 +36,8 @@ BACKGROUND
     background:
         linear-gradient(
             135deg,
-            rgba(20,15,29,0.96),
-            rgba(89,29,46,0.92)
+            rgba(20,15,29,0.97),
+            rgba(89,29,46,0.94)
         );
 }
 
@@ -148,10 +148,6 @@ DATAFRAME
     padding: 10px;
 }
 
-[data-testid="stDataFrame"] * {
-    color: white !important;
-}
-
 /* =====================================================
 EXPANDER
 ===================================================== */
@@ -171,15 +167,6 @@ PROGRESS BAR
 
 .stProgress > div > div > div > div {
     background-color: #ff4b6e !important;
-}
-
-/* =====================================================
-PLOTLY
-===================================================== */
-
-.js-plotly-plot {
-    border-radius: 20px;
-    overflow: hidden;
 }
 
 /* =====================================================
@@ -514,6 +501,10 @@ df = pd.DataFrame({
     "Coût (€)": list(couts.values())
 })
 
+df["% du coût total"] = (
+    df["Coût (€)"] / df["Coût (€)"].sum() * 100
+).round(1)
+
 # =========================================================
 # KPI
 # =========================================================
@@ -560,10 +551,6 @@ st.metric(
 
 st.progress(score / 100)
 
-st.caption("""
-Ce score est un indicateur pédagogique simplifié.
-""")
-
 # =========================================================
 # EXPLICATIONS
 # =========================================================
@@ -602,20 +589,47 @@ st.header("📈 Répartition des coûts")
 
 col1, col2 = st.columns(2)
 
+# =====================================================
+BARPLOT
+# =====================================================
+
 with col1:
 
     fig = px.bar(
         df,
         x="Poste",
         y="Coût (€)",
-        text_auto=".0f",
-        color="Coût (€)"
+        text="Coût (€)",
+        color="Coût (€)",
+        color_continuous_scale="Blues"
+    )
+
+    fig.update_traces(
+        texttemplate='%{text:.0f}',
+        textposition='outside'
     )
 
     fig.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font_color='white'
+
+        paper_bgcolor='white',
+        plot_bgcolor='white',
+
+        font_color='black',
+
+        title_font_color='black',
+
+        xaxis=dict(
+            tickfont=dict(color='black')
+        ),
+
+        yaxis=dict(
+            tickfont=dict(color='black'),
+            gridcolor='lightgrey'
+        ),
+
+        margin=dict(t=40, l=20, r=20, b=80),
+
+        height=500
     )
 
     st.plotly_chart(
@@ -623,17 +637,33 @@ with col1:
         use_container_width=True
     )
 
+# =====================================================
+PIECHART
+# =====================================================
+
 with col2:
 
     fig2 = px.pie(
         df,
         values="Coût (€)",
-        names="Poste"
+        names="Poste",
+        hole=0.35
+    )
+
+    fig2.update_traces(
+        textinfo='percent+label'
     )
 
     fig2.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        font_color='white'
+
+        paper_bgcolor='white',
+        plot_bgcolor='white',
+
+        font_color='black',
+
+        legend_font_color='black',
+
+        height=500
     )
 
     st.plotly_chart(
@@ -647,8 +677,23 @@ with col2:
 
 st.header("📋 Détail des coûts")
 
+df_affichage = df.sort_values(
+    "Coût (€)",
+    ascending=False
+)
+
+df_affichage["Coût (€)"] = (
+    df_affichage["Coût (€)"]
+    .round(0)
+)
+
+df_affichage["% du coût total"] = (
+    df_affichage["% du coût total"]
+    .astype(str) + " %"
+)
+
 st.dataframe(
-    df.sort_values("Coût (€)", ascending=False),
+    df_affichage,
     use_container_width=True
 )
 
