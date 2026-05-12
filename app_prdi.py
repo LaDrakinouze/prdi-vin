@@ -45,7 +45,7 @@ BACKGROUND
 TEXT
 ===================================================== */
 
-p, label, div, span {
+p, label {
     color: #f4efe9 !important;
 }
 
