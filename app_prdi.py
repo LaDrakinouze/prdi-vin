@@ -25,7 +25,7 @@ GLOBAL
 
 html, body, [class*="css"] {
     font-family: 'Segoe UI', sans-serif;
-    color: #f4efe9 !important;
+    color: #f4efe9 ;
 }
 
 /* =====================================================
