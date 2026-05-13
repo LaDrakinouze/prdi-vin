@@ -615,8 +615,8 @@ fig2 = px.pie(
     names="Poste",
     hole=0.42,
     color_discrete_sequence=px.colors.sequential.Blues_r,
-    width=650,
-    height=450
+    width=400,
+    height=200
 )
 
 fig2.update_traces(
