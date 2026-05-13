@@ -620,6 +620,7 @@ with col1:
         text="Coût (€)",
         color="Coût (€)",
         color_continuous_scale="Blues"
+        title=""
     )
 
     fig.update_traces(
@@ -627,33 +628,48 @@ with col1:
         textposition='outside'
     )
 
-    fig.update_layout(
+fig.update_layout(
 
-        paper_bgcolor='white',
-        plot_bgcolor='white',
+    paper_bgcolor='white',
+    plot_bgcolor='white',
 
-        font_color='black',
+    font=dict(
+        color='black',
+        size=14
+    ),
 
-        title_font_color='black',
+    title_font=dict(
+        color='black',
+        size=20
+    ),
 
-        xaxis=dict(
-            tickfont=dict(color='black')
-        ),
+    xaxis=dict(
+        title_font=dict(color='black'),
+        tickfont=dict(color='black'),
+        color='black'
+    ),
 
-        yaxis=dict(
-            tickfont=dict(color='black'),
-            gridcolor='lightgrey'
-        ),
+    yaxis=dict(
+        title_font=dict(color='black'),
+        tickfont=dict(color='black'),
+        color='black',
+        gridcolor='lightgrey'
+    ),
 
-        margin=dict(t=40, l=20, r=20, b=80),
+    coloraxis_colorbar=dict(
+        title_font=dict(color='black'),
+        tickfont=dict(color='black')
+    ),
 
-        height=500
-    )
+    margin=dict(
+        t=40,
+        l=20,
+        r=20,
+        b=80
+    ),
 
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
+    height=500
+)
 
 # =====================================================
 #PIECHART
