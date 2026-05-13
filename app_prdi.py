@@ -637,7 +637,7 @@ font=dict(
 legend=dict(
     font=dict(
         color='black',
-        size=15
+        size=10
     ),
     orientation="v",
     x=0,
