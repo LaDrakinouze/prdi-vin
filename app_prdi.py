@@ -615,8 +615,8 @@ fig2 = px.pie(
     names="Poste",
     hole=0.42,
     color_discrete_sequence=px.colors.sequential.Blues_r,
-    width=900,
-    height=650
+    width=650,
+    height=450
 )
 
 fig2.update_traces(
@@ -637,7 +637,7 @@ font=dict(
 legend=dict(
     font=dict(
         color='black',
-        size=10
+        size=13
     ),
     orientation="v",
     x=0,
