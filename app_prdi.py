@@ -610,11 +610,13 @@ plus le procédé est considéré comme responsable.
 st.header("📈 Répartition des coûts")
 
 fig2 = px.pie(
-df,
-values="Coût (€)",
-names="Poste",
-hole=0.42,
-color_discrete_sequence=px.colors.sequential.Blues_r
+    df,
+    values="Coût (€)",
+    names="Poste",
+    hole=0.42,
+    color_discrete_sequence=px.colors.sequential.Blues_r,
+    width=900,
+    height=650
 )
 
 fig2.update_traces(
@@ -646,7 +648,7 @@ legend=dict(
 
 margin=dict(
     t=40,
-    l=20,
+    l=220,
     r=20,
     b=20
 ),
