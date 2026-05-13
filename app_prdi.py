@@ -619,7 +619,7 @@ with col1:
         y="Coût (€)",
         text="Coût (€)",
         color="Coût (€)",
-        color_continuous_scale="Blues"
+        color_continuous_scale="Blues",
         title=""
     )
 
