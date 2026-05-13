@@ -362,7 +362,7 @@ params = {
         "sulfites": 0.4,
         "filtration": 1,
 
-        "elevage": 250,
+        "elevage": 70,
         "pertes": 0.10,
 
         "marc": 1040,
