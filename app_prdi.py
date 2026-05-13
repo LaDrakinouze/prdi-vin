@@ -637,7 +637,11 @@ legend=dict(
         color='black',
         size=15
     ),
-    orientation="v"
+    orientation="v",
+    x=0,
+    y=0.5,
+    xanchor="left",
+    yanchor="middle"
 ),
 
 margin=dict(
