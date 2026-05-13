@@ -648,7 +648,7 @@ legend=dict(
 
 margin=dict(
     t=40,
-    l=220,
+    l=260,
     r=20,
     b=20
 ),
